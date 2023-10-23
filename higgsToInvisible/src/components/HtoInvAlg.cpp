@@ -1,24 +1,24 @@
-#include "EmptyAlg.h"
+#include "HtoInvAlg.h"
 #include "GaudiKernel/MsgStream.h"
 #include <vector>
 #include <TLorentzVector.h>
 #include "edm4hep/ReconstructedParticle.h"
 
-DECLARE_COMPONENT(EmptyAlg)
+DECLARE_COMPONENT(HtoInvAlg)
 
-EmptyAlg::EmptyAlg(const std::string& aName, ISvcLocator* aSvcLoc) : GaudiAlgorithm(aName, aSvcLoc) {
+HtoInvAlg::HtoInvAlg(const std::string& aName, ISvcLocator* aSvcLoc) : GaudiAlgorithm(aName, aSvcLoc) {
     declareProperty("RecoParticleColl", m_recoParticleCollHandle, "RecoParticle collection");
 }
 
-EmptyAlg::~EmptyAlg() {
+HtoInvAlg::~HtoInvAlg() {
 }
 
-StatusCode EmptyAlg::initialize() {
+StatusCode HtoInvAlg::initialize() {
 m_event_counter = 0;
 return StatusCode::SUCCESS; 
 }
 
-StatusCode EmptyAlg::execute() { 
+StatusCode HtoInvAlg::execute() { 
 
 m_event_counter += 1;
 
@@ -68,7 +68,7 @@ info() << "CH in the event loop info()" << endmsg;
 return StatusCode::SUCCESS; 
 }
 
-StatusCode EmptyAlg::finalize() { 
+StatusCode HtoInvAlg::finalize() { 
     std::unique_ptr<TFile> myFile( TFile::Open("file.root", "RECREATE") );
     //myFile->WriteObject(&myObject, "MyObject");
     for (auto const& x : histos) {
@@ -85,7 +85,7 @@ return StatusCode::SUCCESS;
 }
 
 
-void EmptyAlg::fillHisto(const char *name, const char *title, int nbinsx, double xlow, double xup, double value){
+void HtoInvAlg::fillHisto(const char *name, const char *title, int nbinsx, double xlow, double xup, double value){
   if (histos.find(name) == histos.end()) {
 	// key not found
         histos[name] = new TH1F(name, title, nbinsx, xlow, xup);

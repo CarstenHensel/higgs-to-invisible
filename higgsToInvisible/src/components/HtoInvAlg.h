@@ -11,10 +11,10 @@
 #include "TH1.h"
 #include "TNtuple.h"
 
-class EmptyAlg : public GaudiAlgorithm {
+class HtoInvAlg : public GaudiAlgorithm {
 public:
-  explicit EmptyAlg(const std::string&, ISvcLocator*);
-  virtual ~EmptyAlg();
+  explicit HtoInvAlg(const std::string&, ISvcLocator*);
+  virtual ~HtoInvAlg();
   /**  Initialize.
    *   @return status code
    */
