@@ -2,9 +2,9 @@ from Gaudi.Configuration import *
 
 
 path = "/afs/cern.ch/user/c/chensel/ILD/lcio_edm4hep/edm4hep/"
-files = [path + "Dirac-Dst-E250-e2e2h_inv.eR.pL_bg-00001.root",
-         path + "Dirac-Dst-E250-e2e2h_inv.eR.pL_bg-00002.root",
-         path + "Dirac-Dst-E250-e2e2h_inv.eR.pL_bg-00003.root"]
+files = [path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00001.root",
+         path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00002.root",
+         path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00003.root"]
 
 from Configurables import k4DataSvc
 evtSvc = k4DataSvc('EventDataSvc')
@@ -20,8 +20,8 @@ from Configurables import PodioInput
 input = PodioInput("InputReader")
 input.collections = ["PandoraPFOs"]
 
-from Configurables import EmptyAlg
-myalg = EmptyAlg()
+from Configurables import HtoInvAlg
+myalg = HtoInvAlg()
 myalg.RecoParticleColl = 'PandoraPFOs'
 #myalg.MuonColl = 'Muons'
 myalg.OutputLevel = INFO
@@ -34,7 +34,7 @@ output.filename = 'tst.root'
 from Configurables import ApplicationMgr
 ApplicationMgr( TopAlg=[input, myalg, output],
                 EvtSel="NONE",
-#                EvtMax=100,
+                EvtMax=-1,
 		ExtSvc=[evtSvc],
                 OutputLevel=INFO,
                 )
