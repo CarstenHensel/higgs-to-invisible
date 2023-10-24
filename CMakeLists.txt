@@ -47,6 +47,6 @@ endif()
 
 include(CTest)
 
-add_subdirectory(k4ProjectTemplate)
+add_subdirectory(higgsToInvisble)
 
 include(cmake/CreateProjectConfig.cmake)
