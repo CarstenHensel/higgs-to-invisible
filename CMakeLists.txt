@@ -48,5 +48,4 @@ endif()
 include(CTest)
 
 add_subdirectory(higgsToInvisible)
-
 include(cmake/CreateProjectConfig.cmake)
