@@ -7,7 +7,7 @@ files = [path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00001.root",
          path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00003.root"]
 
 from Configurables import k4DataSvc
-from Configurables import MarlinProcessorWrapper
+from Configurables import MarlinProcessorWrapper, EDM4hep2LcioTool, Lcio2EDM4hepTool
 
 evtSvc = k4DataSvc('EventDataSvc')
 # muons:
@@ -21,6 +21,12 @@ evtSvc.inputs = files
 from Configurables import PodioInput
 input = PodioInput("InputReader")
 input.collections = ["PandoraPFOs"]
+
+from Configurables import LcioEvent
+lcio_read = LcioEvent()
+lcio_read.OutputLevel = DEBUG
+lcio_read.Files = ["/eos/experiment/clicdp/grid/ilc/user/t/tjunping/data/slcio/E250_overlay/Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00001.slcio"]
+
 
 from Configurables import HtoInvAlg
 myalg = HtoInvAlg()
@@ -56,22 +62,12 @@ MyIsolatedLeptonTaggingProcessor.Parameters = {
                                                "OutputPFOsWithoutIsoLepCollection": ["PandoraPFOsWithoutIsoLep"],
                                                "UseYokeForMuonID": ["false"]
                                                }
+edm4hep2LcioConv = EDM4hep2LcioTool("EDM4hep2Lcio")
+lcio2edm4hepConv = Lcio2EDM4hepTool("Lcio2EDM4hep")
+#MyIsolatedLeptonTaggingProcessor.EDM4hep2LcioTool = edm4hep2LcioConv
+MyIsolatedLeptonTaggingProcessor.Lcio2EDM4hepTool = lcio2edm4hepConv
 
 
-#MyFastJetProcessor = MarlinProcessorWrapper("MyFastJetProcessor")
-#MyFastJetProcessor.OutputLevel = DEBUG
-#MyFastJetProcessor.ProcessorType = "FastJetProcessor"
-#MyFastJetProcessor.Parameters = {
-#                                 "algorithm": ["ee_kt_algorithm"],
-#                                 "clusteringMode": ["ExclusiveNJets", "2"],
-#                                 "findNrJets": ["2"],
-#                                 "findNrJetsCollectionPrefix": ["Jets_"],
-#                                 "jetOut": ["Durham_2Jets"],
-#                                 "recParticleIn": ["PandoraPFOsWithoutIsoLep"],
-#                                 "recParticleOut": ["Durham_2JetsPFOs"],
-#                                 "recombinationScheme": ["E_scheme"],
-#                                 "storeParticlesInJets": ["true"]
-#                                 }
 
 
 
@@ -82,7 +78,8 @@ output.filename = 'tst.root'
 
 
 from Configurables import ApplicationMgr
-ApplicationMgr( TopAlg=[input, MyIsolatedLeptonTaggingProcessor, output],
+ApplicationMgr( TopAlg=[lcio_read, MyIsolatedLeptonTaggingProcessor, myalg, output],
+#ApplicationMgr( TopAlg=[input, myalg, output],
                 EvtSel="NONE",
                 EvtMax=10,
 		ExtSvc=[evtSvc],
