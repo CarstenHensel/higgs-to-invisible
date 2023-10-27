@@ -38,8 +38,7 @@ export PYTHONPATH=$PWD/../install/python:$PYTHONPATH
 and then run the examples like this:
 
 ``` bash
-k4run ../k4ProjectTemplate/options/createHelloWorld.py
-k4run ../k4ProjectTemplate/options/createExampleEventData.py
+k4run ../higgsToInvisible/options/higgsToInvisible.py
 ```
 
 
