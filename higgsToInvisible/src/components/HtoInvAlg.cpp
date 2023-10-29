@@ -14,8 +14,8 @@ HtoInvAlg::~HtoInvAlg() {
 }
 
 StatusCode HtoInvAlg::initialize() {
-m_event_counter = 0;
-return StatusCode::SUCCESS; 
+  m_event_counter = 0;
+  return StatusCode::SUCCESS; 
 }
 
 StatusCode HtoInvAlg::execute() { 
