@@ -83,12 +83,12 @@ MyLCIOOutputProcessor.Parameters = {
                                     }
 
 algList.append(MyIsolatedLeptonTaggingProcessor)
-algList.append(MyFastJetProcessor)
+#algList.append(MyFastJetProcessor)
 
 from Configurables import ApplicationMgr
 ApplicationMgr( TopAlg = algList,
                 EvtSel = 'NONE',
-                EvtMax   = 10,
+                EvtMax   = 5,
                 ExtSvc = [evtsvc],
                 OutputLevel=DEBUG
               )
