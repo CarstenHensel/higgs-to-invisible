@@ -64,8 +64,21 @@ MyIsolatedLeptonTaggingProcessor.Parameters = {
                                                }
 edm4hep2LcioConv = EDM4hep2LcioTool("EDM4hep2Lcio")
 lcio2edm4hepConv = Lcio2EDM4hepTool("Lcio2EDM4hep")
-#MyIsolatedLeptonTaggingProcessor.EDM4hep2LcioTool = edm4hep2LcioConv
-MyIsolatedLeptonTaggingProcessor.Lcio2EDM4hepTool = lcio2edm4hepConv
+edm4hep2LcioConv.convertAll = False
+edm4hep2LcioConv.collNameMapping = {
+        'PrimaryVertex':                   'PrimaryVertex',
+        'PandoraPFOs':                     'PandoraPFOs'
+      }
+#lcio2edm4hepConv.convertAll = False
+#lcio2edm4hepConv.collNameMapping = {
+#     'PandoraPFOs': 'PandoraPFOs',
+#     'IsolatedLeptons': 'IsolatedLeptons',
+#     'PandoraPFOsWithoutIsoLep': 'PandoraPFOsWithoutIsoLep'
+#     }
+
+
+MyIsolatedLeptonTaggingProcessor.EDM4hep2LcioTool = edm4hep2LcioConv
+#MyIsolatedLeptonTaggingProcessor.Lcio2EDM4hepTool = lcio2edm4hepConv
 
 
 
@@ -78,7 +91,7 @@ output.filename = 'tst.root'
 
 
 from Configurables import ApplicationMgr
-ApplicationMgr( TopAlg=[lcio_read, MyIsolatedLeptonTaggingProcessor, myalg, output],
+ApplicationMgr( TopAlg=[input, MyIsolatedLeptonTaggingProcessor, output],
 #ApplicationMgr( TopAlg=[input, myalg, output],
                 EvtSel="NONE",
                 EvtMax=10,
