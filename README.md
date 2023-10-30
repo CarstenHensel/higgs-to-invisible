@@ -27,15 +27,9 @@ cmake .. -DCMAKE_INSTALL_PREFIX=../install
 make install
 ```
 
-## Execute Examples
+## Execute 
 
-Make sure that `../install/lib` and `../install/python` are in `LD_LIBRARY_PATH`
-and `PYTHONPATH` respectively, by doing:
-``` bash
-export LD_LIBRARY_PATH=$PWD/../install/lib:$LD_LIBRARY_PATH
-export PYTHONPATH=$PWD/../install/python:$PYTHONPATH
-```
-and then run the examples like this:
+and then run the algorithm like this:
 
 ``` bash
 k4run ../higgsToInvisible/options/higgsToInvisible.py
