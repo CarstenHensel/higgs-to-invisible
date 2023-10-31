@@ -20,7 +20,8 @@ evtSvc.inputs = files
 
 from Configurables import PodioInput
 input = PodioInput("InputReader")
-input.collections = ["PandoraPFOs"]
+input.collections = ["PandoraPFOs", "PrimaryVertex", "PandoraClusters", "MarlinTrkTracks"]
+
 
 from Configurables import LcioEvent
 lcio_read = LcioEvent()
@@ -67,8 +68,12 @@ lcio2edm4hepConv = Lcio2EDM4hepTool("Lcio2EDM4hep")
 edm4hep2LcioConv.convertAll = False
 edm4hep2LcioConv.collNameMapping = {
         'PrimaryVertex':                   'PrimaryVertex',
-        'PandoraPFOs':                     'PandoraPFOs'
+        'PandoraPFOs':                     'PandoraPFOs',
+        "PandoraClusters": "PandoraClusters",
+        "MarlinTrkTracks": "MarlinTrkTracks",
       }
+
+
 #lcio2edm4hepConv.convertAll = False
 #lcio2edm4hepConv.collNameMapping = {
 #     'PandoraPFOs': 'PandoraPFOs',
@@ -77,8 +82,8 @@ edm4hep2LcioConv.collNameMapping = {
 #     }
 
 
-MyIsolatedLeptonTaggingProcessor.EDM4hep2LcioTool = edm4hep2LcioConv
-#MyIsolatedLeptonTaggingProcessor.Lcio2EDM4hepTool = lcio2edm4hepConv
+#MyIsolatedLeptonTaggingProcessor.EDM4hep2LcioTool = edm4hep2LcioConv
+MyIsolatedLeptonTaggingProcessor.Lcio2EDM4hepTool = lcio2edm4hepConv
 
 
 
@@ -92,7 +97,6 @@ output.filename = 'tst.root'
 
 from Configurables import ApplicationMgr
 ApplicationMgr( TopAlg=[input, MyIsolatedLeptonTaggingProcessor, output],
-#ApplicationMgr( TopAlg=[input, myalg, output],
                 EvtSel="NONE",
                 EvtMax=10,
 		ExtSvc=[evtSvc],
