@@ -4,7 +4,16 @@ from Gaudi.Configuration import *
 path = "/afs/cern.ch/user/c/chensel/ILD/lcio_edm4hep/edm4hep/"
 files = [path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00001.root",
          path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00002.root",
-         path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00003.root"]
+         path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00003.root",
+         path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00004.root",
+         path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00005.root",
+         path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00006.root",
+         path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00007.root",
+         path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00008.root",
+         path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00009.root",
+         path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00010.root",
+         path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00011.root",
+         path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00012.root"]
 
 from Configurables import k4DataSvc
 from Configurables import MarlinProcessorWrapper, EDM4hep2LcioTool, Lcio2EDM4hepTool
