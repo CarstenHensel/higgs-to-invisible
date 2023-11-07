@@ -72,6 +72,25 @@ MyIsolatedLeptonTaggingProcessor.Parameters = {
                                                "OutputPFOsWithoutIsoLepCollection": ["PandoraPFOsWithoutIsoLep"],
                                                "UseYokeForMuonID": ["false"]
                                                }
+
+
+MyLeptonPairing = MarlinProcessorWrapper("MyLeptonPairing")
+MyLeptonPairing.OutputLevel = DEBUG
+MyLeptonPairing.ProcessorType = "LeptonPairing"
+MyLeptonPairing.Parameters = {
+                              "ISOLeptons": ["ISOLeptons"],
+                              "LeptonPair": ["LeptonPair"],
+                              "PandoraPFOsWithoutIsoLep": ["PandoraPFOsWithoutIsoLep"],
+                              "PandoraPFOsWithoutLepPair": ["PandoraPFOsWithoutLepPair"],
+                              "RootFile": ["%(OutputDirectory)s/%(OutputBaseName)s_LeptonPairing.root" % CONSTANTS],
+                              "fillRootTree": ["true"]
+                              }
+
+
+
+
+
+
 edm4hep2LcioConv = EDM4hep2LcioTool("EDM4hep2Lcio")
 lcio2edm4hepConv = Lcio2EDM4hepTool("Lcio2EDM4hep")
 edm4hep2LcioConv.convertAll = False
@@ -105,7 +124,7 @@ output.filename = 'tst.root'
 
 
 from Configurables import ApplicationMgr
-ApplicationMgr( TopAlg=[input, MyIsolatedLeptonTaggingProcessor, myalg, output],
+ApplicationMgr( TopAlg=[input, MyIsolatedLeptonTaggingProcessor, MyLeptonPairing, myalg, output],
                 EvtSel="NONE",
                 EvtMax=10,
 		ExtSvc=[evtSvc],
