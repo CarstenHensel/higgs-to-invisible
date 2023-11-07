@@ -108,16 +108,6 @@ LeptonPairing::LeptonPairing():
 void LeptonPairing::init() {
   streamlog_out(DEBUG0) << "   init called  " << endl ;
   printParameters();
-  if ( m_fillRootTree ) {
-    streamlog_out(DEBUG0) << "      Creating root file/tree/histograms" << endl ;
-    m_pTFile = new TFile(m_rootFile.c_str(), "recreate");
-    m_pTTree = new TTree("LeptonPairing", "LeptonPairing");
-    m_pTTree->SetDirectory(m_pTFile);
-    m_pTTree->Branch("event", &m_nEvt, "event/I");
-    m_pTTree->Branch("IsoLepsInvMass", &m_IsoLepsInvMass);
-    m_pTTree->Branch("RecoLepsInvMass", &m_RecoLepsInvMass);
-    streamlog_out(DEBUG0) << "      Created root file/tree/histograms" << endl ;
-  }
 
   this->Clear();
   m_nRun = 0;
