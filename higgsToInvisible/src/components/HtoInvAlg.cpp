@@ -8,6 +8,7 @@ DECLARE_COMPONENT(HtoInvAlg)
 
 HtoInvAlg::HtoInvAlg(const std::string& aName, ISvcLocator* aSvcLoc) : GaudiAlgorithm(aName, aSvcLoc) {
     declareProperty("RecoParticleColl", m_recoParticleCollHandle, "RecoParticle collection");
+    declareProperty("IsolatedLeptonsColl", m_isolatedLeptonsCollHandle, "Isolated Leptons collection");
 }
 
 HtoInvAlg::~HtoInvAlg() {
@@ -24,11 +25,11 @@ m_event_counter += 1;
 
 std::cout << "event count " << m_event_counter << std::endl;
 
-auto *jetColl = m_jetsCollectionHandle.createAndPut();
-jetColl->setSubsetCollection();
 
 double sqrts =250.0;
 
+const auto *isoLeptonColl = m_isolatedLeptonsCollHandle.get(); 
+ 
 const auto *recoColl = m_recoParticleCollHandle.get();
 int muonsFound = 0;
 std::vector<TLorentzVector> muons;

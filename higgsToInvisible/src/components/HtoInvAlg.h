@@ -33,9 +33,10 @@ private:
   DataHandle<edm4hep::ReconstructedParticleCollection> m_recoParticleCollHandle{
       "ReconstructedParticleCollection", Gaudi::DataHandle::Reader, this};
 
-  DataHandle<edm4hep::ReconstructedParticleCollection> m_jetsCollectionHandle{
-      "Jets", Gaudi::DataHandle::Writer, this};
-
+  DataHandle<edm4hep::ReconstructedParticleCollection> m_isolatedLeptonsCollHandle{
+      "IsolatedLeptonsCollection", Gaudi::DataHandle::Reader, this};
+  
+  
   int m_event_counter = 0;	
 
   int m_member = 0;

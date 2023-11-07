@@ -31,7 +31,6 @@ from Configurables import PodioInput
 input = PodioInput("InputReader")
 input.collections = ["PandoraPFOs", "PrimaryVertex", "PandoraClusters", "MarlinTrkTracks"]
 
-
 from Configurables import LcioEvent
 lcio_read = LcioEvent()
 lcio_read.OutputLevel = DEBUG
@@ -41,6 +40,7 @@ lcio_read.Files = ["/eos/experiment/clicdp/grid/ilc/user/t/tjunping/data/slcio/E
 from Configurables import HtoInvAlg
 myalg = HtoInvAlg()
 myalg.RecoParticleColl = 'PandoraPFOs'
+myalg.IsolatedLeptonsColl = 'IsolatedLeptons'
 #myalg.MuonColl = 'Muons'
 myalg.OutputLevel = INFO
 
@@ -79,20 +79,22 @@ edm4hep2LcioConv.collNameMapping = {
         'PrimaryVertex':                   'PrimaryVertex',
         'PandoraPFOs':                     'PandoraPFOs',
         "PandoraClusters": "PandoraClusters",
-        "MarlinTrkTracks": "MarlinTrkTracks",
+        "MarlinTrkTracks": "MarlinTrkTracks"
       }
 
 
-#lcio2edm4hepConv.convertAll = False
-#lcio2edm4hepConv.collNameMapping = {
-#     'PandoraPFOs': 'PandoraPFOs',
-#     'IsolatedLeptons': 'IsolatedLeptons',
-#     'PandoraPFOsWithoutIsoLep': 'PandoraPFOsWithoutIsoLep'
-#     }
+lcio2edm4hepConv.convertAll = False
+lcio2edm4hepConv.collNameMapping = {
+     'PandoraPFOs': 'PandoraPFOs',
+     'IsolatedLeptons': 'IsolatedLeptons',
+     'PandoraPFOsWithoutIsoLep': 'PandoraPFOsWithoutIsoLepl',
+     "PandoraClusters": "PandoraClusters",
+     "MarlinTrkTracks": "MarlinTrkTracks"
+     }
 
 
 MyIsolatedLeptonTaggingProcessor.EDM4hep2LcioTool = edm4hep2LcioConv
-#MyIsolatedLeptonTaggingProcessor.Lcio2EDM4hepTool = lcio2edm4hepConv
+MyIsolatedLeptonTaggingProcessor.Lcio2EDM4hepTool = lcio2edm4hepConv
 
 
 
@@ -103,7 +105,7 @@ output.filename = 'tst.root'
 
 
 from Configurables import ApplicationMgr
-ApplicationMgr( TopAlg=[input, MyIsolatedLeptonTaggingProcessor, output],
+ApplicationMgr( TopAlg=[input, MyIsolatedLeptonTaggingProcessor, myalg, output],
                 EvtSel="NONE",
                 EvtMax=10,
 		ExtSvc=[evtSvc],
