@@ -29,6 +29,8 @@ std::cout << "event count " << m_event_counter << std::endl;
 double sqrts =250.0;
 
 const auto *isoLeptonColl = m_isolatedLeptonsCollHandle.get(); 
+
+ std::cout << "Leptons found " << isoLeptonColl->size() << std::endl;
  
 const auto *recoColl = m_recoParticleCollHandle.get();
 int muonsFound = 0;
