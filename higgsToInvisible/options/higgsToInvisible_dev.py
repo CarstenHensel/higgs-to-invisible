@@ -111,7 +111,7 @@ lcio2edm4hepConv.convertAll = False
 lcio2edm4hepConv.collNameMapping = {
      'PandoraPFOs': 'PandoraPFOs',
      'IsolatedLeptons': 'IsolatedLeptons',
-     'PandoraPFOsWithoutIsoLep': 'PandoraPFOsWithoutIsoLepl',
+     'PandoraPFOsWithoutIsoLep': 'PandoraPFOsWithoutIsoLep',
      "PandoraClusters": "PandoraClusters",
      "MarlinTrkTracks": "MarlinTrkTracks"
      }
@@ -125,45 +125,12 @@ MyIsolatedLeptonTaggingProcessor.Lcio2EDM4hepTool = lcio2edm4hepConv
 
 
 # Lepton Pairing Processor
+from Configurables import LeptonPairing
 
-MyLeptonPairing = MarlinProcessorWrapper("MyLeptonPairing")
-MyLeptonPairing.OutputLevel = DEBUG
-MyLeptonPairing.ProcessorType = "LeptonPairing"
-MyLeptonPairing.Parameters = {
-                              "ISOLeptons": ["ISOLeptons"],
-                              "LeptonPair": ["LeptonPair"],
-                              "PandoraPFOsWithoutIsoLep": ["PandoraPFOsWithoutIsoLep"],
-                              "PandoraPFOsWithoutLepPair": ["PandoraPFOsWithoutLepPair"],
-                              "RootFile": ["%(OutputDirectory)s/%(OutputBaseName)s_LeptonPairing.root" % CONSTANTS],
-                              "fillRootTree": ["true"]
-                              }
-
-
-edm4hep2Lcio_pairing = EDM4hep2LcioTool("EDM4hep2Lcio_pairing")
-lcio2edm4hep_pairing = Lcio2EDM4hepTool("Lcio2EDM4hep_pairing")
-edm4hep2Lcio_pairing.convertAll = False
-edm4hep2Lcio_pairing.collNameMapping = {
-        'PrimaryVertex':                   'PrimaryVertex',
-        'PandoraPFOs':                     'PandoraPFOs',
-        "PandoraClusters": "PandoraClusters",
-        "MarlinTrkTracks": "MarlinTrkTracks"
-      }
-
-
-lcio2edm4hep_pairing.convertAll = False
-lcio2edm4hep_pairing.collNameMapping = {
-     'PandoraPFOs': 'PandoraPFOs',
-     'IsolatedLeptons': 'IsolatedLeptons',
-     'PandoraPFOsWithoutIsoLep': 'PandoraPFOsWithoutIsoLepl',
-     "PandoraClusters": "PandoraClusters",
-     "MarlinTrkTracks": "MarlinTrkTracks"
-     }
-
-
-
-MyLeptonPairing.EDM4hep2LcioTool = edm4hep2Lcio_pairing
-MyLeptonPairing.Lcio2EDM4hepTool = lcio2edm4hep_pairing
-
+MyLeptonPairing = LeptonPairing()
+MyLeptonPairing.RecoParticleColl = 'PandoraPFOs'
+MyLeptonPairing.IsolatedLeptonsColl = 'IsolatedLeptons'
+MyLeptonPairing.PandoraPFOsWithoutIsoLep = 'PandoraPFOsWithoutIsoLep'
 
 
 
