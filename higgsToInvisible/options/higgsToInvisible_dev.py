@@ -1,22 +1,6 @@
 from Gaudi.Configuration import *
 
 
-CONSTANTS = {
-             'lcgeo_DIR': "/cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-02-02/lcgeo/v00-16-06",
-             'DetectorModel': "ILD_l5_o1_v02",
-             'CompactFile': "%(lcgeo_DIR)s/ILD/compact/%(DetectorModel)s/%(DetectorModel)s.xml",
-             'OutputDirectory': "/afs/cern.ch/user/c/chensel/ILD/workarea/dev_nightly/higgs-to-invisible/build",
-             'OutputBaseName': "leptonpairs",
-             'OutputRootFile': "%(OutputBaseName)s.root",
-             'NumberOfHiggs': "2",
-             'NumberOfJets': "4",
-             'NumberOfIsoLeps': "2",
-             'WhichPreselection': "llbbbb",
-             'createRootTree': "false",
-             'displayEvent': "false",
-             'Verbosity': "DEBUG",
-}
-
 
 path = "/afs/cern.ch/user/c/chensel/ILD/lcio_edm4hep/edm4hep/"
 files = [path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00001.root",
