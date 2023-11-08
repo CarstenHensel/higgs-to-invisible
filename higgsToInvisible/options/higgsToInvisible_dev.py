@@ -1,6 +1,23 @@
 from Gaudi.Configuration import *
 
 
+CONSTANTS = {
+             'lcgeo_DIR': "/cvmfs/ilc.desy.de/sw/x86_64_gcc82_centos7/v02-02-02/lcgeo/v00-16-06",
+             'DetectorModel': "ILD_l5_o1_v02",
+             'CompactFile': "%(lcgeo_DIR)s/ILD/compact/%(DetectorModel)s/%(DetectorModel)s.xml",
+             'OutputDirectory': "/afs/cern.ch/user/c/chensel/ILD/workarea/dev_nightly/higgs-to-invisible/build",
+             'OutputBaseName': "leptonpairs",
+             'OutputRootFile': "%(OutputBaseName)s.root",
+             'NumberOfHiggs': "2",
+             'NumberOfJets': "4",
+             'NumberOfIsoLeps': "2",
+             'WhichPreselection': "llbbbb",
+             'createRootTree': "false",
+             'displayEvent': "false",
+             'Verbosity': "DEBUG",
+}
+
+
 path = "/afs/cern.ch/user/c/chensel/ILD/lcio_edm4hep/edm4hep/"
 files = [path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00001.root",
          path + "Dirac-Dst-E250-e2e2h_inv.eL.pR_bg-00002.root",
@@ -44,6 +61,9 @@ myalg.IsolatedLeptonsColl = 'IsolatedLeptons'
 #myalg.MuonColl = 'Muons'
 myalg.OutputLevel = INFO
 
+
+# Isolated Lepton Processor
+
 MyIsolatedLeptonTaggingProcessor = MarlinProcessorWrapper("MyIsolatedLeptonTaggingProcessor")
 MyIsolatedLeptonTaggingProcessor.OutputLevel = DEBUG
 MyIsolatedLeptonTaggingProcessor.ProcessorType = "IsolatedLeptonTaggingProcessor"
@@ -74,21 +94,6 @@ MyIsolatedLeptonTaggingProcessor.Parameters = {
                                                }
 
 
-MyLeptonPairing = MarlinProcessorWrapper("MyLeptonPairing")
-MyLeptonPairing.OutputLevel = DEBUG
-MyLeptonPairing.ProcessorType = "LeptonPairing"
-MyLeptonPairing.Parameters = {
-                              "ISOLeptons": ["ISOLeptons"],
-                              "LeptonPair": ["LeptonPair"],
-                              "PandoraPFOsWithoutIsoLep": ["PandoraPFOsWithoutIsoLep"],
-                              "PandoraPFOsWithoutLepPair": ["PandoraPFOsWithoutLepPair"],
-                              "RootFile": ["%(OutputDirectory)s/%(OutputBaseName)s_LeptonPairing.root" % CONSTANTS],
-                              "fillRootTree": ["true"]
-                              }
-
-
-
-
 
 
 edm4hep2LcioConv = EDM4hep2LcioTool("EDM4hep2Lcio")
@@ -112,8 +117,55 @@ lcio2edm4hepConv.collNameMapping = {
      }
 
 
+
+
 MyIsolatedLeptonTaggingProcessor.EDM4hep2LcioTool = edm4hep2LcioConv
 MyIsolatedLeptonTaggingProcessor.Lcio2EDM4hepTool = lcio2edm4hepConv
+
+
+
+# Lepton Pairing Processor
+
+MyLeptonPairing = MarlinProcessorWrapper("MyLeptonPairing")
+MyLeptonPairing.OutputLevel = DEBUG
+MyLeptonPairing.ProcessorType = "LeptonPairing"
+MyLeptonPairing.Parameters = {
+                              "ISOLeptons": ["ISOLeptons"],
+                              "LeptonPair": ["LeptonPair"],
+                              "PandoraPFOsWithoutIsoLep": ["PandoraPFOsWithoutIsoLep"],
+                              "PandoraPFOsWithoutLepPair": ["PandoraPFOsWithoutLepPair"],
+                              "RootFile": ["%(OutputDirectory)s/%(OutputBaseName)s_LeptonPairing.root" % CONSTANTS],
+                              "fillRootTree": ["true"]
+                              }
+
+
+edm4hep2Lcio_pairing = EDM4hep2LcioTool("EDM4hep2Lcio_pairing")
+lcio2edm4hep_pairing = Lcio2EDM4hepTool("Lcio2EDM4hep_pairing")
+edm4hep2Lcio_pairing.convertAll = False
+edm4hep2Lcio_pairing.collNameMapping = {
+        'PrimaryVertex':                   'PrimaryVertex',
+        'PandoraPFOs':                     'PandoraPFOs',
+        "PandoraClusters": "PandoraClusters",
+        "MarlinTrkTracks": "MarlinTrkTracks"
+      }
+
+
+lcio2edm4hep_pairing.convertAll = False
+lcio2edm4hep_pairing.collNameMapping = {
+     'PandoraPFOs': 'PandoraPFOs',
+     'IsolatedLeptons': 'IsolatedLeptons',
+     'PandoraPFOsWithoutIsoLep': 'PandoraPFOsWithoutIsoLepl',
+     "PandoraClusters": "PandoraClusters",
+     "MarlinTrkTracks": "MarlinTrkTracks"
+     }
+
+
+
+MyLeptonPairing.EDM4hep2LcioTool = edm4hep2Lcio_pairing
+MyLeptonPairing.Lcio2EDM4hepTool = lcio2edm4hep_pairing
+
+
+
 
 
 
