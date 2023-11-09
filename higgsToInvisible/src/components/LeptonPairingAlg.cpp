@@ -1,4 +1,4 @@
-#include "LeptonPairing.h"
+#include "LeptonPairingAlg.h"
 
 DECLARE_COMPONENT(LeptonPairingAlg)
 

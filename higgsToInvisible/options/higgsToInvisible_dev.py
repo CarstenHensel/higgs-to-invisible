@@ -109,9 +109,9 @@ MyIsolatedLeptonTaggingProcessor.Lcio2EDM4hepTool = lcio2edm4hepConv
 
 
 # Lepton Pairing Processor
-from Configurables import LeptonPairing
+from Configurables import LeptonPairingAlg
 
-MyLeptonPairing = LeptonPairing()
+MyLeptonPairing = LeptonPairingAlg()
 MyLeptonPairing.RecoParticleColl = 'PandoraPFOs'
 MyLeptonPairing.IsolatedLeptonsColl = 'IsolatedLeptons'
 MyLeptonPairing.PandoraPFOsWithoutIsoLep = 'PandoraPFOsWithoutIsoLep'

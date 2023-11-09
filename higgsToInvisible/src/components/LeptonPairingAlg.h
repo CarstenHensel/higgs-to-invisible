@@ -13,7 +13,7 @@
 
 class LeptonPairingAlg : public GaudiAlgorithm {
 public:
-  explicit LeptonPairingAlge(const std::string&, ISvcLocator*);
+  explicit LeptonPairingAlg(const std::string&, ISvcLocator*);
   virtual ~LeptonPairingAlg();
   /**  Initialize.
    *   @return status code
