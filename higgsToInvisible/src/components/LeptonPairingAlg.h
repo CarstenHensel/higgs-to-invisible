@@ -11,10 +11,10 @@
 #include "TH1.h"
 #include "TNtuple.h"
 
-class LeptonPairing : public GaudiAlgorithm {
+class LeptonPairingAlg : public GaudiAlgorithm {
 public:
-  explicit LeptonPairing(const std::string&, ISvcLocator*);
-  virtual ~LeptonPairing();
+  explicit LeptonPairingAlge(const std::string&, ISvcLocator*);
+  virtual ~LeptonPairingAlg();
   /**  Initialize.
    *   @return status code
    */
@@ -37,11 +37,4 @@ private:
       "IsolatedLeptonsCollection", Gaudi::DataHandle::Reader, this};
   
   
-  int m_event_counter = 0;	
-
-  int m_member = 0;
-  typedef std::map<std::string, TH1*> HistoMap;
-  HistoMap histos;
-  void fillHisto(std::string key, double value);
-  void fillHisto(const char *name, const char *title, int nbinsx, double xlow, double xup, double value);
 };

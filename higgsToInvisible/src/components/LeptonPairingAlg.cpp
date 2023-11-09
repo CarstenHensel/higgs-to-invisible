@@ -1,24 +1,26 @@
 #include "LeptonPairing.h"
 
-DECLARE_COMPONENT(LeptonPairing)
+DECLARE_COMPONENT(LeptonPairingAlg)
 
-LeptonPairing::LeptonPairing(const std::string& aName, ISvcLocator* aSvcLoc) : GaudiAlgorithm(aName, aSvcLoc) {
+LeptonPairingAlg::LeptonPairingAlg(const std::string& aName, ISvcLocator* aSvcLoc) : GaudiAlgorithm(aName, aSvcLoc) {
   declareProperty("RecoParticleColl", m_recoParticleCollHandle, "RecoParticle collection");
   declareProperty("IsolatedLeptonsColl", m_isolatedLeptonsCollHandle, "Isolated Leptons collection");
 
 }
 
-StatusCode LeptonPairing::initialize() {
-  m_event_counter = 0;
+LeptonPairingAlg::~LeptonPairingAlg(){
+} // destructor
+
+StatusCode LeptonPairingAlg::initialize() {
   return StatusCode::SUCCESS; 
 } // initialize()
 
-StatusCode LeptonPairing::execute() { 
+StatusCode LeptonPairingAlg::execute() { 
   return StatusCode::SUCCESS; 
 } // execute()
 
 
-StatusCode LeptonPairing::finalize() { 
+StatusCode LeptonPairingAlg::finalize() { 
   return StatusCode::SUCCESS; 
 } // finalize()
 
