@@ -29,6 +29,9 @@ public:
    */
   StatusCode finalize() final;
 
+  void doPhotonRecovery((ReconstructedParticle *electron, LCCollection *colPFO, ReconstructedParticleImpl *recoElectron, Double_t fCosFSRCut, Int_t lepType, std::vector<lcio::ReconstructedParticle*> &photons)
+
+  
 private:
   // member variable
   DataHandle<edm4hep::ReconstructedParticleCollection> m_recoParticleCollHandle{

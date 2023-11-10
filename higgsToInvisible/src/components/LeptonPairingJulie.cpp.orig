@@ -233,8 +233,6 @@ void LeptonPairing::processEvent( EVENT::LCEvent *pLCEvent ) {
     ReconstructedParticle* pfo =static_cast<ReconstructedParticle*>(PFOsWOIsoLepCollection->getElementAt(i));
     for (auto photon: photons) {
       if (pfo == photon) isPhoton = true;
-    }
-    if (!isPhoton)  m_PFOsWOLepPairCol->addElement(pfo);
   }
   streamlog_out(DEBUG7) << "nphotons " << photons.size() << endl;
   streamlog_out(DEBUG7) << "nselected " << m_LepPairCol->getNumberOfElements() << endl;
