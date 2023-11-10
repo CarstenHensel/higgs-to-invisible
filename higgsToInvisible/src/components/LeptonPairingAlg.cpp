@@ -15,7 +15,11 @@ StatusCode LeptonPairingAlg::initialize() {
   return StatusCode::SUCCESS; 
 } // initialize()
 
-StatusCode LeptonPairingAlg::execute() { 
+StatusCode LeptonPairingAlg::execute() {
+  const auto *isoLeptonColl = m_isolatedLeptonsCollHandle.get(); 
+  if (isoLeptonColl->size() > 1) {
+    
+  } // if (isoLeptonColl->size() > 1)
   return StatusCode::SUCCESS; 
 } // execute()
 

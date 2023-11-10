@@ -114,7 +114,6 @@ from Configurables import LeptonPairingAlg
 MyLeptonPairing = LeptonPairingAlg()
 MyLeptonPairing.RecoParticleColl = 'PandoraPFOs'
 MyLeptonPairing.IsolatedLeptonsColl = 'IsolatedLeptons'
-MyLeptonPairing.PandoraPFOsWithoutIsoLep = 'PandoraPFOsWithoutIsoLep'
 
 
 
