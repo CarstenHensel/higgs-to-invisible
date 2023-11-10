@@ -47,6 +47,10 @@ StatusCode LeptonPairingAlg::execute() {
        //Check if same type and have opposite charge
        if (lepton1.getType() + lepton2.getType() == 0) {
 	 LeptonPair = {lepton1, lepton2};
+	 
+	 float pairmass = inv_mass(&lepton1, &lepton2);
+	 float delta = abs(pairmass-m_diLepInvMass);
+	 std::cout << "invariant mass " << pairmass << " " << delta << std::endl;      
 	
        }
      } else {
