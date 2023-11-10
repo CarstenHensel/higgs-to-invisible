@@ -11,6 +11,7 @@
 #include "TH1.h"
 #include "TNtuple.h"
 
+
 class LeptonPairingAlg : public GaudiAlgorithm {
 public:
   explicit LeptonPairingAlg(const std::string&, ISvcLocator*);
@@ -29,6 +30,8 @@ public:
   StatusCode finalize() final;
 
 private:
+  template<class T>
+  double LeptonPairingAlg::inv_mass(T* p1, T* p2);
   // member variable
   DataHandle<edm4hep::ReconstructedParticleCollection> m_recoParticleCollHandle{
       "ReconstructedParticleCollection", Gaudi::DataHandle::Reader, this};
@@ -37,6 +40,6 @@ private:
       "IsolatedLeptonsCollection", Gaudi::DataHandle::Reader, this};
 
   bool m_doPhotonRecovery; 
-  
+  double m_diLepInvMass;
   
 };
