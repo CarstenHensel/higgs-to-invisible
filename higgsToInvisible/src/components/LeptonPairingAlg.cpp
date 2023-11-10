@@ -49,7 +49,7 @@ StatusCode LeptonPairingAlg::execute() {
 	 LeptonPair = {lepton1, lepton2};
 	 
 	 float pairmass = inv_mass(&lepton1, &lepton2);
-	 float delta = abs(pairmass-m_diLepInvMass);
+	 float delta = fabs(pairmass-m_diLepInvMass);
 	 std::cout << "invariant mass " << pairmass << " " << delta << std::endl;      
 	
        }

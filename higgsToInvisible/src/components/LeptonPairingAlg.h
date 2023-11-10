@@ -30,8 +30,6 @@ public:
   StatusCode finalize() final;
 
 private:
-  template<class T>
-  double inv_mass(T* p1, T* p2);
   // member variable
   DataHandle<edm4hep::ReconstructedParticleCollection> m_recoParticleCollHandle{
       "ReconstructedParticleCollection", Gaudi::DataHandle::Reader, this};
