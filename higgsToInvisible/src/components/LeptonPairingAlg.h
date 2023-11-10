@@ -35,6 +35,8 @@ private:
 
   DataHandle<edm4hep::ReconstructedParticleCollection> m_isolatedLeptonsCollHandle{
       "IsolatedLeptonsCollection", Gaudi::DataHandle::Reader, this};
+
+  bool m_doPhotonRecovery; 
   
   
 };
