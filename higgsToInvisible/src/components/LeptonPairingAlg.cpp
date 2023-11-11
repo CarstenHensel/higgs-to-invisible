@@ -1,5 +1,6 @@
 #include "LeptonPairingAlg.h"
 #include "edm4hep/ReconstructedParticle.h"
+#include "edm4hep/Vector3f.h"
 #include <vector>
 #include <TLorentzVector.h>
 
@@ -110,7 +111,14 @@ void LeptonPairingAlg::doPhotonRecovery(edm4hep::ReconstructedParticle* lepton,
   std::vector<float> leptonCovMat(_tmpArray.begin(), _tmpArray.end());
 
 
-  
+  for (const auto pfo : *pfoCollection) {
+    if (pfo.getType() == 22) {
+      Vector3f photonMomentum = pfo.getMomentum();
+      Vector3f leptonMomentum = lepton->getMomentum();
+      auto dotProduct = photonMomentum[0] * leptonMomentum[0] + photonMomentum[1] * leptonMomentum[1] + photonMomentum[2] * leptonMomentum[2];  	
+    } // pfo == 22
+  } // pfo loop
+ 
 
   
   
