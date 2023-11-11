@@ -37,7 +37,7 @@ StatusCode LeptonPairingAlg::execute() {
   if (nLeptons > 1) {
 
     std::vector< ReconstructedParticle > LeptonPair = {};
-
+    int _lepton_type;
      double cosFSRCut; // the angle of BS and FSR around the direction of charged lepton
 
      if (m_doPhotonRecovery) cosFSRCut = 0.99;
@@ -47,6 +47,7 @@ StatusCode LeptonPairingAlg::execute() {
        const ReconstructedParticle lepton2 = isoLeptonColl->at( 1 );
        //Check if same type and have opposite charge
        if (lepton1.getType() + lepton2.getType() == 0) {
+	 _lepton_type = abs(lepton1.getType());
 	 LeptonPair = {lepton1, lepton2};
 	 
 	 float pairmass = inv_mass(&lepton1, &lepton2);
@@ -62,6 +63,7 @@ StatusCode LeptonPairingAlg::execute() {
 	     const ReconstructedParticle lepton2 = isoLeptonColl->at( i_lep2 );
 	     //Check if same type and have opposite charge 
 	     if (lepton1.getType() + lepton2.getType() == 0) {
+	       _lepton_type = abs(lepton1.getType());
 	       float pairmass = inv_mass(&lepton1, &lepton2);
 	       float delta = abs(pairmass-m_diLepInvMass);
 	       if (delta > mindelta) continue;
@@ -70,21 +72,20 @@ StatusCode LeptonPairingAlg::execute() {
 	     } 
 	   }
        }
-     }
+     } // if  (nLeptons == 2)
      std::vector<ReconstructedParticle*> photons;
      if (LeptonPair.size() == 2) {
+       const auto *PFOsWOIsoLepCollection = m_PFOsWOIsoLepCollHandle.get();
        // recovery of FSR and BS
-       m_IsoLepsInvMass.push_back(inv_mass(LeptonPair[0], LeptonPair[1]));
-       ReconstructedParticleImpl * recoLepton1 = new ReconstructedParticleImpl();
-       ZHH::doPhotonRecovery(LeptonPair[0],PFOsWOIsoLepCollection,recoLepton1,fCosFSRCut,_lep_type,photons);
-       ReconstructedParticleImpl * recoLepton2 = new ReconstructedParticleImpl();
-       ZHH::doPhotonRecovery(LeptonPair[1],PFOsWOIsoLepCollection,recoLepton2,fCosFSRCut,_lep_type,photons);
-       m_RecoLepsInvMass.push_back(inv_mass(recoLepton1,recoLepton2));
+       ReconstructedParticle * recoLepton1 = new ReconstructedParticle();
+       this->doPhotonRecovery(&(LeptonPair[0]),PFOsWOIsoLepCollection,recoLepton1,cosFSRCut,_lepton_type,photons);
+       ReconstructedParticle * recoLepton2 = new ReconstructedParticle();
+       this->doPhotonRecovery(&(LeptonPair[1]),PFOsWOIsoLepCollection,recoLepton2,cosFSRCut,_lepton_type,photons);
     
-       m_LepPairCol->addElement(recoLepton1);
-       m_LepPairCol->addElement(recoLepton2);
+       m_LepPairCollection->push_back(*recoLepton1);
+       m_LepPairCollection->push_back(*recoLepton2);
      }
-  }
+
 
      
     
@@ -98,8 +99,12 @@ StatusCode LeptonPairingAlg::finalize() {
 } // finalize()
 
 
-void LeptonPairingAlg::doPhotonRecovery(ReconstructedParticle *electron, LCCollection *colPFO, ReconstructedParticleImpl *recoElectron, Double_t fCosFSRCut, 
-		      Int_t lepType, std::vector<lcio::ReconstructedParticle*> &photons) {
+void LeptonPairingAlg::doPhotonRecovery(edm4hep::ReconstructedParticle *lepton,
+					const edm4hep::ReconstructedParticleCollection  *colPFO,
+					edm4hep::ReconstructedParticle *recoLepton,
+					double cosFSRCut,
+					int lepType,
+					std::vector<edm4hep::ReconstructedParticle*> &photons) {
   //streamlog_out(MESSAGE) << "Ladida hfskdafk" << std::endl;
   // recover the BS and FSR photons
   TLorentzVector lortzElectron = TLorentzVector(electron->getMomentum(),electron->getEnergy());

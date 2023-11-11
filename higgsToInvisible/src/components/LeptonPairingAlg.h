@@ -29,7 +29,12 @@ public:
    */
   StatusCode finalize() final;
 
-  void doPhotonRecovery((ReconstructedParticle *electron, LCCollection *colPFO, ReconstructedParticleImpl *recoElectron, Double_t fCosFSRCut, Int_t lepType, std::vector<lcio::ReconstructedParticle*> &photons)
+  void doPhotonRecovery(edm4hep::ReconstructedParticle *lepton,
+			const edm4hep::ReconstructedParticleCollection  *colPFO,
+			edm4hep::ReconstructedParticle *recoLepton,
+			double cosFSRCut,
+			int lepType,
+			std::vector<edm4hep::ReconstructedParticle*> &photons);
 
   
 private:
@@ -40,10 +45,11 @@ private:
   DataHandle<edm4hep::ReconstructedParticleCollection> m_isolatedLeptonsCollHandle{
       "IsolatedLeptonsCollection", Gaudi::DataHandle::Reader, this};
 
-  DataHandle<edm4hep::ReconstructedParticleCollection> m_PFOsWOIsoLepColllHandle{
+   DataHandle<edm4hep::ReconstructedParticleCollection>  m_PFOsWOIsoLepCollHandle{
       "PFOsWOIsoLepCollection", Gaudi::DataHandle::Reader, this};
-			
+
   bool m_doPhotonRecovery; 
   double m_diLepInvMass;
+  edm4hep::ReconstructedParticleCollection*  m_LepPairCollection;
   
 };
