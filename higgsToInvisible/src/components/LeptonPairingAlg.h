@@ -5,6 +5,7 @@
 #include "GaudiAlg/GaudiAlgorithm.h"
 
 #include "edm4hep/ReconstructedParticleCollection.h"
+#include "edm4hep/MutableReconstructedParticle.h"
 #include "k4FWCore/DataHandle.h"
 
 #include "TFile.h"
@@ -29,11 +30,10 @@ public:
    */
   StatusCode finalize() final;
 
-  void doPhotonRecovery(edm4hep::ReconstructedParticle *lepton,
-			const edm4hep::ReconstructedParticleCollection  *colPFO,
-			edm4hep::ReconstructedParticle *recoLepton,
+  void doPhotonRecovery(edm4hep::ReconstructedParticle* lepton,
+			const edm4hep::ReconstructedParticleCollection* colPFO,
+			edm4hep::MutableReconstructedParticle* recoLepton,
 			double cosFSRCut,
-			int lepType,
 			std::vector<edm4hep::ReconstructedParticle*> &photons);
 
   
