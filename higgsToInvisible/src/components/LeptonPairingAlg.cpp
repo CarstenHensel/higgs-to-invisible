@@ -79,16 +79,14 @@ StatusCode LeptonPairingAlg::execute() {
      if (LeptonPair.size() == 2) {
        const auto *PFOsWOIsoLepCollection = m_PFOsWOIsoLepCollHandle.get();
        // recovery of FSR and BS
-       ReconstructedParticle * recoLepton1 = new ReconstructedParticle();
-       this->doPhotonRecovery(&(LeptonPair[0]),PFOsWOIsoLepCollection,recoLepton1,cosFSRCut,_lepton_type,photons);
-       ReconstructedParticle * recoLepton2 = new ReconstructedParticle();
-       this->doPhotonRecovery(&(LeptonPair[1]),PFOsWOIsoLepCollection,recoLepton2,cosFSRCut,_lepton_type,photons);
+       ReconstructedParticle recoLepton1 = LeptonPair[0].clone();
+       this->doPhotonRecovery(&(LeptonPair[0]), PFOsWOIsoLepCollection, &recoLepton1,cosFSRCut, _lepton_type, photons);
+       ReconstructedParticle recoLepton2 = LeptonPair[1].clone();
+       this->doPhotonRecovery(&(LeptonPair[1]), PFOsWOIsoLepCollection, &recoLepton2,cosFSRCut, _lepton_type, photons);
     
        m_LepPairCollection->push_back(*recoLepton1);
        m_LepPairCollection->push_back(*recoLepton2);
      }
-
-
      
     
   } // if (isoLeptonColl->size() > 1)
@@ -110,7 +108,9 @@ void LeptonPairingAlg::doPhotonRecovery(edm4hep::ReconstructedParticle *lepton,
   //streamlog_out(MESSAGE) << "Ladida hfskdafk" << std::endl;
   // recover the BS and FSR photons
   TLorentzVector* lorentzLepton = new TLorentzVector(lepton->getMomentum()[0], lepton->getMomentum()[1], lepton->getMomentum()[2], static_cast<double>(lepton->getEnergy()));
-  std::vector<float> leptonCovMat = lepton->getCovMatrix();
+  std::array _tmpArray = lepton->getCovMatrix();
+  std::vector<float> leptonCovMat(_tmpArray.begin(), _tmpArray.end());
+  
   recoLepton->addParticle(lepton);
   int nPFOs = colPFO->getNumberOfElements();
   for (int i = 0; i < nPFOs; i++) {
