@@ -51,5 +51,7 @@ private:
   bool m_doPhotonRecovery; 
   double m_diLepInvMass;
   edm4hep::ReconstructedParticleCollection*  m_LepPairCollection;
+
+  float dotProduct(edm4hep::Vector3f v1, edm4hep::Vector3f v2);
   
 };

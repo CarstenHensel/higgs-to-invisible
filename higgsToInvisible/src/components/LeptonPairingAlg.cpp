@@ -100,6 +100,11 @@ StatusCode LeptonPairingAlg::finalize() {
 } // finalize()
 
 
+float LeptonPairingAlg::dotProduct(Vector3f v1, Vector3f v2) {
+  return v1[0] * v2[0] + v1[1] * v2[1] * v1[2] * v2[2];
+}
+
+
 void LeptonPairingAlg::doPhotonRecovery(edm4hep::ReconstructedParticle* lepton,
 					const edm4hep::ReconstructedParticleCollection* pfoCollection,
 					edm4hep::MutableReconstructedParticle* recoLepton,
@@ -115,7 +120,10 @@ void LeptonPairingAlg::doPhotonRecovery(edm4hep::ReconstructedParticle* lepton,
     if (pfo.getType() == 22) {
       Vector3f photonMomentum = pfo.getMomentum();
       Vector3f leptonMomentum = lepton->getMomentum();
-      auto dotProduct = photonMomentum[0] * leptonMomentum[0] + photonMomentum[1] * leptonMomentum[1] + photonMomentum[2] * leptonMomentum[2];  	
+      auto _tmp1 = this->dotProduct(photonMomentum, leptonMomentum);
+      auto _tmp2 = sqrt(this->dotProduct(photonMomentum, photonMomentum)) * sqrt(this->dotProduct(leptonMomentum, leptonMomentum));
+      auto cosLeptonPhoton = _tmp1 / _tmp2;
+      std::cout << "cos lepton photon " << cosLeptonPhoton << std::endl;
     } // pfo == 22
   } // pfo loop
  
