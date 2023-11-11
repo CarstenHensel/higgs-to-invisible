@@ -1,6 +1,8 @@
 #include "LeptonPairingAlg.h"
 #include "edm4hep/ReconstructedParticle.h"
 #include <vector>
+#include <TLorentzVector.h>
+
 
 DECLARE_COMPONENT(LeptonPairingAlg)
 
@@ -107,11 +109,11 @@ void LeptonPairingAlg::doPhotonRecovery(edm4hep::ReconstructedParticle *lepton,
 					std::vector<edm4hep::ReconstructedParticle*> &photons) {
   //streamlog_out(MESSAGE) << "Ladida hfskdafk" << std::endl;
   // recover the BS and FSR photons
-  TLorentzVector lortzElectron = TLorentzVector(electron->getMomentum(),electron->getEnergy());
-  std::vector<float> electronCovMat = electron->getCovMatrix();
-  recoElectron->addParticle(electron);
-  Int_t nPFOs = colPFO->getNumberOfElements();
-  for (Int_t i=0;i<nPFOs;i++) {
+  TLorentzVector lortzLepton = TLorentzVector(lepton->getMomentum(), lepton->getEnergy());
+  std::vector<float> leptonCovMat = lepton->getCovMatrix();
+  recoLepton->addParticle(lepton);
+  int nPFOs = colPFO->getNumberOfElements();
+  for (int i = 0; i < nPFOs; i++) {
     ReconstructedParticle *recPart = dynamic_cast<ReconstructedParticle*>(colPFO->getElementAt(i));
     if (recPart == electron) continue;
     if (isolep::isFoundInVector(recPart,photons)) continue;
