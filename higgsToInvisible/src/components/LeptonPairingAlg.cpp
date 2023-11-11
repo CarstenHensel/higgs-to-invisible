@@ -79,13 +79,13 @@ StatusCode LeptonPairingAlg::execute() {
      if (LeptonPair.size() == 2) {
        const auto *PFOsWOIsoLepCollection = m_PFOsWOIsoLepCollHandle.get();
        // recovery of FSR and BS
-       ReconstructedParticle recoLepton1 = LeptonPair[0].clone();
+       MutableReconstructedParticle recoLepton1 = LeptonPair[0].clone();
        this->doPhotonRecovery(&(LeptonPair[0]), PFOsWOIsoLepCollection, &recoLepton1,cosFSRCut, photons);
-       ReconstructedParticle recoLepton2 = LeptonPair[1].clone();
+       MutableReconstructedParticle recoLepton2 = LeptonPair[1].clone();
        this->doPhotonRecovery(&(LeptonPair[1]), PFOsWOIsoLepCollection, &recoLepton2,cosFSRCut, photons);
     
-       m_LepPairCollection->push_back(*recoLepton1);
-       m_LepPairCollection->push_back(*recoLepton2);
+       //m_LepPairCollection->push_back(recoLepton1);
+       //m_LepPairCollection->push_back(recoLepton2);
      }
      
     
@@ -104,7 +104,6 @@ void LeptonPairingAlg::doPhotonRecovery(edm4hep::ReconstructedParticle* lepton,
 					edm4hep::MutableReconstructedParticle* recoLepton,
 					double cosFSRCut,
 					std::vector<edm4hep::ReconstructedParticle*> &photons) {
-  //streamlog_out(MESSAGE) << "Ladida hfskdafk" << std::endl;
   // recover the BS and FSR photons
   TLorentzVector* lorentzLepton = new TLorentzVector(lepton->getMomentum()[0], lepton->getMomentum()[1], lepton->getMomentum()[2], static_cast<double>(lepton->getEnergy()));
   std::array _tmpArray = lepton->getCovMatrix();
@@ -115,7 +114,7 @@ void LeptonPairingAlg::doPhotonRecovery(edm4hep::ReconstructedParticle* lepton,
 
   
   
-  recoLepton->addParticle(lepton);
+  /*  recoLepton->addParticle(lepton);
   int nPFOs = colPFO->getNumberOfElements();
   for (int i = 0; i < nPFOs; i++) {
     ReconstructedParticle *recPart = dynamic_cast<ReconstructedParticle*>(colPFO->getElementAt(i));
@@ -146,5 +145,6 @@ void LeptonPairingAlg::doPhotonRecovery(edm4hep::ReconstructedParticle* lepton,
   recoElectron->setCharge(charge);
   recoElectron->setType(94);
   recoElectron->setCovMatrix(electronCovMat);
+  */
 }
 
