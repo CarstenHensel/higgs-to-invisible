@@ -109,7 +109,7 @@ void LeptonPairingAlg::doPhotonRecovery(edm4hep::ReconstructedParticle *lepton,
 					std::vector<edm4hep::ReconstructedParticle*> &photons) {
   //streamlog_out(MESSAGE) << "Ladida hfskdafk" << std::endl;
   // recover the BS and FSR photons
-  TLorentzVector lortzLepton = TLorentzVector(lepton->getMomentum(), lepton->getEnergy());
+  TLorentzVector* lorentzLepton = new TLorentzVector(lepton->getMomentum()[0], lepton->getMomentum()[1], lepton->getMomentum()[2], static_cast<double>(lepton->getEnergy()));
   std::vector<float> leptonCovMat = lepton->getCovMatrix();
   recoLepton->addParticle(lepton);
   int nPFOs = colPFO->getNumberOfElements();
