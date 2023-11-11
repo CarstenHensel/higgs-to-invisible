@@ -114,6 +114,7 @@ from Configurables import LeptonPairingAlg
 MyLeptonPairing = LeptonPairingAlg()
 MyLeptonPairing.RecoParticleColl = 'PandoraPFOs'
 MyLeptonPairing.IsolatedLeptonsColl = 'IsolatedLeptons'
+MyLeptonPairing.PFOsWOIsoLepColl = 'PandoraPFOsWithoutIsoLep'
 MyLeptonPairing.doPhotonRecovery = True
 MyLeptonPairing.diLeptinInvariantMass = 91.1876
 

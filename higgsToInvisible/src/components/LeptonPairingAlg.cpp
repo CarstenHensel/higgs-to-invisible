@@ -19,6 +19,7 @@ double inv_mass(T* p1, T* p2){
 LeptonPairingAlg::LeptonPairingAlg(const std::string& aName, ISvcLocator* aSvcLoc) : GaudiAlgorithm(aName, aSvcLoc) {
   declareProperty("RecoParticleColl", m_recoParticleCollHandle, "RecoParticle collection");
   declareProperty("IsolatedLeptonsColl", m_isolatedLeptonsCollHandle, "Isolated Leptons collection");
+  declareProperty("PFOsWOIsoLepColl", m_PFOsWOIsoLepCollHandle, "Isolated Leptons collection");
   declareProperty("doPhotonRecovery", m_doPhotonRecovery, "Do Photon Recovery");
   declareProperty("diLeptinInvariantMass", m_diLepInvMass, "Di-lepton Invariant Mass");
 }
@@ -70,6 +71,20 @@ StatusCode LeptonPairingAlg::execute() {
 	   }
        }
      }
+     std::vector<ReconstructedParticle*> photons;
+     if (LeptonPair.size() == 2) {
+       // recovery of FSR and BS
+       m_IsoLepsInvMass.push_back(inv_mass(LeptonPair[0], LeptonPair[1]));
+       ReconstructedParticleImpl * recoLepton1 = new ReconstructedParticleImpl();
+       ZHH::doPhotonRecovery(LeptonPair[0],PFOsWOIsoLepCollection,recoLepton1,fCosFSRCut,_lep_type,photons);
+       ReconstructedParticleImpl * recoLepton2 = new ReconstructedParticleImpl();
+       ZHH::doPhotonRecovery(LeptonPair[1],PFOsWOIsoLepCollection,recoLepton2,fCosFSRCut,_lep_type,photons);
+       m_RecoLepsInvMass.push_back(inv_mass(recoLepton1,recoLepton2));
+    
+       m_LepPairCol->addElement(recoLepton1);
+       m_LepPairCol->addElement(recoLepton2);
+     }
+  }
 
      
     

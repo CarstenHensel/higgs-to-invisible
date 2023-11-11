@@ -40,6 +40,9 @@ private:
   DataHandle<edm4hep::ReconstructedParticleCollection> m_isolatedLeptonsCollHandle{
       "IsolatedLeptonsCollection", Gaudi::DataHandle::Reader, this};
 
+  DataHandle<edm4hep::ReconstructedParticleCollection> m_PFOsWOIsoLepColllHandle{
+      "PFOsWOIsoLepCollection", Gaudi::DataHandle::Reader, this};
+			
   bool m_doPhotonRecovery; 
   double m_diLepInvMass;
   
