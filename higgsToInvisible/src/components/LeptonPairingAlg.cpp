@@ -76,7 +76,7 @@ StatusCode LeptonPairingAlg::execute() {
 	   }
        }
      } // if  (nLeptons == 2)
-     std::vector<ReconstructedParticle*> photons;
+     std::vector<const ReconstructedParticle*> photons;
      if (LeptonPair.size() == 2) {
        const auto *PFOsWOIsoLepCollection = m_PFOsWOIsoLepCollHandle.get();
        // recovery of FSR and BS
@@ -119,7 +119,7 @@ void LeptonPairingAlg::doPhotonRecovery(edm4hep::ReconstructedParticle* lepton,
 					const edm4hep::ReconstructedParticleCollection* pfoCollection,
 					edm4hep::MutableReconstructedParticle* recoLepton,
 					double cosFSRCut,
-					std::vector<edm4hep::ReconstructedParticle*> &photons) {
+					std::vector<const edm4hep::ReconstructedParticle*> &photons) {
   // recover the BS and FSR photons
   TLorentzVector* lorentzLepton = new TLorentzVector(lepton->getMomentum()[0], lepton->getMomentum()[1], lepton->getMomentum()[2], static_cast<double>(lepton->getEnergy()));
   std::array _tmpArray = lepton->getCovMatrix();
@@ -132,6 +132,7 @@ void LeptonPairingAlg::doPhotonRecovery(edm4hep::ReconstructedParticle* lepton,
       Vector3f leptonMomentum = lepton->getMomentum();
       auto cosLeptonPhoton = this->getCos(&leptonMomentum, &photonMomentum);
       if (cosLeptonPhoton < cosFSRCut) continue;
+      photons.push_back(&pfo);
     } // pfo == 22
   } // pfo loop
  

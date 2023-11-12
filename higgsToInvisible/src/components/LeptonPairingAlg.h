@@ -34,7 +34,7 @@ public:
 			const edm4hep::ReconstructedParticleCollection* colPFO,
 			edm4hep::MutableReconstructedParticle* recoLepton,
 			double cosFSRCut,
-			std::vector<edm4hep::ReconstructedParticle*> &photons);
+			std::vector<const edm4hep::ReconstructedParticle*> &photons);
 
   
 private:
