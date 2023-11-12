@@ -52,6 +52,8 @@ private:
   double m_diLepInvMass;
   edm4hep::ReconstructedParticleCollection*  m_LepPairCollection;
 
-  float dotProduct(edm4hep::Vector3f v1, edm4hep::Vector3f v2);
+  float dotProduct(const edm4hep::Vector3f* v1, const edm4hep::Vector3f* v2);
+  float getMag(const edm4hep::Vector3f* v);
+  float getCos(const edm4hep::Vector3f* v1, const edm4hep::Vector3f* v2);
   
 };

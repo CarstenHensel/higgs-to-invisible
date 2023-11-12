@@ -55,7 +55,7 @@ StatusCode LeptonPairingAlg::execute() {
 	 
 	 float pairmass = inv_mass(&lepton1, &lepton2);
 	 float delta = fabs(pairmass-m_diLepInvMass);
-	 std::cout << "invariant mass " << pairmass << " " << delta << std::endl;      
+	 info() << "invariant mass " << pairmass << " " << delta << endmsg;      
 	
        }
      } else {
@@ -84,7 +84,10 @@ StatusCode LeptonPairingAlg::execute() {
        this->doPhotonRecovery(&(LeptonPair[0]), PFOsWOIsoLepCollection, &recoLepton1,cosFSRCut, photons);
        MutableReconstructedParticle recoLepton2 = LeptonPair[1].clone();
        this->doPhotonRecovery(&(LeptonPair[1]), PFOsWOIsoLepCollection, &recoLepton2,cosFSRCut, photons);
-    
+
+
+       info() << "cos between leptons " << this->getCos(&(LeptonPair[0].getMomentum()), &(LeptonPair[1].getMomentum())) << endmsg;
+       
        //m_LepPairCollection->push_back(recoLepton1);
        //m_LepPairCollection->push_back(recoLepton2);
      }
@@ -100,10 +103,17 @@ StatusCode LeptonPairingAlg::finalize() {
 } // finalize()
 
 
-float LeptonPairingAlg::dotProduct(Vector3f v1, Vector3f v2) {
-  return v1[0] * v2[0] + v1[1] * v2[1] * v1[2] * v2[2];
+float LeptonPairingAlg::dotProduct(const Vector3f* v1, const Vector3f* v2) {
+  return (*v1)[0] * (*v2)[0] + (*v1)[1] * (*v2)[1] * (*v1)[2] * (*v2)[2];
 }
 
+float LeptonPairingAlg::getMag(const Vector3f* v) {
+  return sqrt(this->dotProduct(v, v));
+}
+
+float LeptonPairingAlg::getCos(const Vector3f* v1, const Vector3f* v2) {
+  return this->dotProduct(v1, v2) / this->getMag(v1) / this->getMag(v2); 
+}
 
 void LeptonPairingAlg::doPhotonRecovery(edm4hep::ReconstructedParticle* lepton,
 					const edm4hep::ReconstructedParticleCollection* pfoCollection,
@@ -120,10 +130,8 @@ void LeptonPairingAlg::doPhotonRecovery(edm4hep::ReconstructedParticle* lepton,
     if (pfo.getType() == 22) {
       Vector3f photonMomentum = pfo.getMomentum();
       Vector3f leptonMomentum = lepton->getMomentum();
-      auto _tmp1 = this->dotProduct(photonMomentum, leptonMomentum);
-      auto _tmp2 = sqrt(this->dotProduct(photonMomentum, photonMomentum)) * sqrt(this->dotProduct(leptonMomentum, leptonMomentum));
-      auto cosLeptonPhoton = _tmp1 / _tmp2;
-      std::cout << "cos lepton photon " << cosLeptonPhoton << std::endl;
+      auto cosLeptonPhoton = this->getCos(&leptonMomentum, &photonMomentum);
+      if (cosLeptonPhoton < cosFSRCut) continue;
     } // pfo == 22
   } // pfo loop
  

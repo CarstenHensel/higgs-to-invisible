@@ -23,14 +23,12 @@ StatusCode HtoInvAlg::execute() {
 
 m_event_counter += 1;
 
-std::cout << "event count " << m_event_counter << std::endl;
 
 
 double sqrts =250.0;
 
 const auto *isoLeptonColl = m_isolatedLeptonsCollHandle.get(); 
 
- std::cout << "Leptons found " << isoLeptonColl->size() << std::endl;
  
 const auto *recoColl = m_recoParticleCollHandle.get();
 int muonsFound = 0;
@@ -60,14 +58,11 @@ fillHisto("invariant mass", "invariant mass", 120, 0, 120, (muons[0]+muons[1]).M
 
 double recoil_corrected = std::sqrt(pow(sqrts-(muons[0]+muons[1]).E(),2) - pow((muons[0]+muons[1]).P(),2));
 double recoil = std::sqrt(pow(250-(muons[0]+muons[1]).E(),2) - pow((muons[0]+muons[1]).P(),2));
-info() << recoil << " " << (muons[0]+muons[1]).E() << " " << (muons[0]+muons[1]).P() << endmsg;
 fillHisto("recoil mass corrected", "recoild mass", 200, 0, 200, recoil_corrected);
 fillHisto("recoil mass", "recoild mass", 200, 0, 200, recoil);
 
 }
 
-std::cout << "CH in the event loop" << std::endl;
-info() << "CH in the event loop info()" << endmsg;
 return StatusCode::SUCCESS; 
 }
 
