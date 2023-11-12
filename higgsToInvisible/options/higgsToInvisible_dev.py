@@ -129,7 +129,7 @@ output.filename = 'tst.root'
 from Configurables import ApplicationMgr
 ApplicationMgr( TopAlg=[input, MyIsolatedLeptonTaggingProcessor, MyLeptonPairing, myalg, output],
                 EvtSel="NONE",
-                EvtMax=10,
+                EvtMax=50,
 		ExtSvc=[evtSvc],
                 OutputLevel=INFO,
-                )
+               )
