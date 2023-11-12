@@ -133,6 +133,13 @@ void LeptonPairingAlg::doPhotonRecovery(edm4hep::ReconstructedParticle* lepton,
       auto cosLeptonPhoton = this->getCos(&leptonMomentum, &photonMomentum);
       if (cosLeptonPhoton < cosFSRCut) continue;
       photons.push_back(&pfo);
+      Vector3f recoLeptonMomentum = recoLepton->getMomentum();
+      Vector3f momentumSum = Vector3f(recoLeptonMomentum[0] + photonMomentum[0],
+				      recoLeptonMomentum[1] + photonMomentum[1],
+				      recoLeptonMomentum[2] + photonMomentum[2]);
+      recoLepton->setMomentum(momentumSum);
+      recoLepton->setEnergy(recoLepton->getEnergy() + pfo.getEnergy());
+	
     } // pfo == 22
   } // pfo loop
  
