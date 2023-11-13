@@ -139,8 +139,8 @@ void LeptonPairingAlg::doPhotonRecovery(edm4hep::ReconstructedParticle* lepton,
 				      recoLeptonMomentum[2] + photonMomentum[2]);
       recoLepton->setMomentum(momentumSum);
       recoLepton->setEnergy(recoLepton->getEnergy() + pfo.getEnergy());
+     
       info() << "photon corrected lepton mass " << recoLepton->getMass() << endmsg;
-	
     } // pfo == 22
   } // pfo loop
  
