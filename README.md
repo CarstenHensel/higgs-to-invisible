@@ -20,6 +20,8 @@ This repository can be a starting point and template for projects using the Key4
 ``` bash
 bash
 source /cvmfs/sw-nightlies.hsf.org/key4hep/setup.sh
+git clone https://github.com/CarstenHensel/higgs-to-invisible.git
+cd higgs-to-invisible/
 source setup.sh
 mkdir build install
 cd build;
