@@ -25,7 +25,7 @@ cd higgs-to-invisible/
 source setup.sh
 mkdir build install
 cd build;
-cmake .. -DCMAKE_INSTALL_PREFIX=../install
+cmake .. -DCMAKE_INSTALL_PREFIX=../install -DPython_EXECUTABLE=$(which python3)
 make install
 ```
 
